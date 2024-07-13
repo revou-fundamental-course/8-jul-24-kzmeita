@@ -1,47 +1,20 @@
-// Function to calculate BMI
-function calculateBMI(weight, height) {
-    // Convert height from cm to meters
-    height = height / 100;
-    // Calculate BMI
-    return (weight / (height * height)).toFixed(2);
-}
+function calculateBMI() {
+    const weight = parseFloat(document.getElementById('weight').value);
+    const heightCm = parseFloat(document.getElementById('height').value);
+    const heightM = heightCm / 100;
+    const bmi = weight / (heightM * heightM);
+    let status = '';
 
-// Function to provide explanation based on BMI value
-function getBMIExplanation(bmi) {
     if (bmi < 18.5) {
-        return "Underweight";
+        status = 'Kekurangan berat badan';
     } else if (bmi >= 18.5 && bmi <= 24.9) {
-        return "Normal weight";
-    } else if (bmi >= 25 && bmi <= 29.9) {
-        return "Overweight";
+        status = 'Normal (ideal)';
+    } else if (bmi >= 25.0 && bmi <= 29.9) {
+        status = 'Kelebihan berat badan';
     } else {
-        return "Obesity";
+        status = 'Kegemukan (obesitas)';
     }
-}
 
-// Event listener for form submission
-document.getElementById('bmiForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent form from submitting the traditional way
-    
-    // Get input values
-    const weight = document.getElementById('weight').value;
-    const height = document.getElementById('height').value;
-    const gender = document.getElementById('gender').value;
-    
-    // Validate input values
-    if (weight <= 0 || height <= 0) {
-        alert('Please enter valid values for weight and height.');
-        return;
-    }
-    
-    // Calculate BMI
-    const bmi = calculateBMI(weight, height);
-    
-    // Get BMI explanation
-    const explanation = getBMIExplanation(bmi);
-    
-    // Display result
-    document.getElementById('result').style.display = 'block';
-    document.getElementById('bmiValue').innerText = `BMI Anda: ${bmi}`;
-    document.getElementById('bmiExplanation').innerText = `Keterangan: ${explanation}`;
-});
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = `<p>BMI Anda adalah: ${bmi.toFixed(2)}</p><p>Status berat badan: ${status}</p>`;
+}
