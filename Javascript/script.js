@@ -1,37 +1,46 @@
-let button = document.getElementById('btn');
+// Function to calculate BMI
+function calculateBMI(weight, height) {
+    // Convert height from cm to meters
+    height = height / 100;
+    // Calculate BMI
+    return (weight / (height * height)).toFixed(2);
+}
 
-button.addEventListener('click', () => {
-    const height = parseInt(document.getElementById('height').value);
-    const weight = parseInt(document.getElementById('weight').value);
-    const result = document.getElementById('output');
-    let height_status=false, weight_status=false;
-
-    if(height === '' || isNaN(height) || (height <= 0)){
-        document.getElementById('height_error').innerHTML = 'Please provide a valid height';
-    }else{
-        document.getElementById('height_error').innerHTML = '';
-        height_status=true;
+// Function to provide explanation based on BMI value
+function getBMIExplanation(bmi, gender) {
+    if (bmi < 18.5) {
+        return "Underweight";
+    } else if (bmi >= 18.5 && bmi <= 24.9) {
+        return "Normal weight";
+    } else if (bmi >= 25 && bmi <= 29.9) {
+        return "Overweight";
+    } else {
+        return "Obesity";
     }
+}
 
-    if(weight === '' || isNaN(weight) || (weight <= 0)){
-        document.getElementById('weight_error').innerHTML = 'Please provide a valid weight';
-    }else{
-        document.getElementById('weight_error').innerHTML = '';
-        weight_status=true;
+// Event listener for form submission
+document.getElementById('bmiForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form from submitting the traditional way
+    
+    // Get input values
+    const weight = document.getElementById('weight').value;
+    const height = document.getElementById('height').value;
+    const gender = document.getElementById('gender').value;
+    
+    // Validate input values
+    if (weight <= 0 || height <= 0) {
+        alert('Please enter valid values for weight and height.');
+        return;
     }
-
-    if(height_status && weight_status){
-        const bmi = (weight / ((height*height)/10000)).toFixed(2);
-
-        if(bmi < 18.6){
-            result.innerHTML = 'Under weight : ' + bmi;
-        }else if(bmi >= 18.6 && bmi < 24.9){
-            result.innerHTML = 'Normal : ' + bmi;
-        }else{
-            result.innerHTML = 'Over weight : ' + bmi;
-        }
-    }else{
-        alert('The form has errors');
-        result.innerHTML = '';
-    }
+    
+    // Calculate BMI
+    const bmi = calculateBMI(weight, height);
+    
+    // Get BMI explanation
+    const explanation = getBMIExplanation(bmi, gender);
+    
+    // Display result
+    document.getElementById('bmiValue').innerText = `BMI Anda: ${bmi}`;
+    document.getElementById('bmiExplanation').innerText = `Keterangan: ${explanation}`;
 });
