@@ -7,7 +7,7 @@ function calculateBMI(weight, height) {
 }
 
 // Function to provide explanation based on BMI value
-function getBMIExplanation(bmi, gender) {
+function getBMIExplanation(bmi) {
     if (bmi < 18.5) {
         return "Underweight";
     } else if (bmi >= 18.5 && bmi <= 24.9) {
@@ -38,9 +38,10 @@ document.getElementById('bmiForm').addEventListener('submit', function(event) {
     const bmi = calculateBMI(weight, height);
     
     // Get BMI explanation
-    const explanation = getBMIExplanation(bmi, gender);
+    const explanation = getBMIExplanation(bmi);
     
     // Display result
+    document.getElementById('result').style.display = 'block';
     document.getElementById('bmiValue').innerText = `BMI Anda: ${bmi}`;
     document.getElementById('bmiExplanation').innerText = `Keterangan: ${explanation}`;
 });
